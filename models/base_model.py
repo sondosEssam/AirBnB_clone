@@ -7,6 +7,7 @@ contains base class for all other class
 
 import uuid
 import datetime
+from models import storage
 class BaseModel:
     '''
     BaseModel class - parent class for all other classses 
@@ -20,6 +21,7 @@ class BaseModel:
             self.id = str(uuid.uuid4())
             self.created_at = datetime.datetime.now()
             self.updated_at = self.created_at
+            storage.new(self)
         else:
             for key, value in kwargs.items():
                 if key != "__class__":
@@ -43,6 +45,7 @@ class BaseModel:
         update time
         '''
         self.updated_at = datetime.datetime.now()
+        storage.save()
     def to_dict(self):
         '''
         returns dictionary representation of the class
@@ -59,5 +62,3 @@ class BaseModel:
                 my_dict[key] = value
         my_dict["__class__"] = self.__class__.__name__
         return my_dict
-
-onj = BaseModel({})

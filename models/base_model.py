@@ -12,13 +12,24 @@ class BaseModel:
     BaseModel class - parent class for all other classses 
     '''
 
-    def __init__(self):
+    def __init__(self, *args, **kwargs):
         '''
         intiating basemodel instance 
         '''
-        self.id = str(uuid.uuid4())
-        self.created_at = datetime.datetime.now()
-        self.updated_at = self.created_at
+        if(len(kwargs) == 0):
+            self.id = str(uuid.uuid4())
+            self.created_at = datetime.datetime.now()
+            self.updated_at = self.created_at
+        else:
+            for key, value in kwargs.items():
+                if key != "__class__":
+                    if key == "created_at" or key == "updated_at":
+                        self.key = datetime.fromisoformat(value)
+                    else:
+                        self.key = value
+
+                
+
 
     def __str__(self):
         '''
@@ -47,3 +58,5 @@ class BaseModel:
                 my_dict[key] = value
         my_dict["__class__"] = self.__class__.__name__
         return my_dict
+
+onj = BaseModel({})

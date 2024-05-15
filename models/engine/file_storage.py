@@ -9,7 +9,7 @@ class FileStorage:
     '''
     file storage class
     '''
-    __file_path = "file.json"
+    __file_path = "models/engine/file.json"
     __objects = {}
 
     def all(self):

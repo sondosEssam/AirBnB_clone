@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 '''
-class User that inherits from BaseModel
+User class that inherits from BaseModel
 '''
 
 

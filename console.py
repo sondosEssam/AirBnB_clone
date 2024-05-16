@@ -166,7 +166,12 @@ class HBNBCommand(cmd.Cmd):
                     storage.save()
                     return
             print("** no instance found **")
-    
+    def default(self, line):
+        args = line.split('.')
+        if len(args) == 1:
+            return super().default(line)
+        else:
+            self.do_all(args[0])
 
 
 

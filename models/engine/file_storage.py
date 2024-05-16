@@ -9,7 +9,7 @@ class FileStorage:
     '''
     file storage class
     '''
-    __file_path = "models/engine/file.json"
+    __file_path = "file.json"
     __objects = {}
 
     def all(self):
@@ -25,7 +25,7 @@ class FileStorage:
         FileStorage.__objects[f"{obj.__class__.__name__}.{obj.id}"] = obj
     def save(self):
         '''
-        saves json into file
+        serializes __objects to the JSON file (path: __file_path)
         '''
         serialized_objs = {}
         for key, obj in  FileStorage.__objects.items():
@@ -35,15 +35,20 @@ class FileStorage:
 
     def reload(self):
         '''
-        realod json from file , convert to dict
+        deserializes the JSON file to __objects
         '''
         try:
             with open(FileStorage.__file_path , "r") as f:
                 data = json.load(f)
                 from models.base_model import BaseModel
+                from models.user import User
                 for key, value in data.items():
+                    cls, ins_id = key.split(".")
                     obj_dict = value
-                    obj = BaseModel(**obj_dict)
+                    if cls == "BaseModel":
+                        obj = BaseModel(**obj_dict)
+                    elif cls == "User":
+                        obj = User(**obj_dict)
                     FileStorage.__objects[key] = obj
         except FileNotFoundError:
             pass

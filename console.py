@@ -7,6 +7,7 @@ module
 import cmd
 import shlex
 from models.base_model import BaseModel
+from models.user import User
 from models import storage
 class HBNBCommand(cmd.Cmd):
     '''
@@ -49,6 +50,10 @@ class HBNBCommand(cmd.Cmd):
             ins = BaseModel()
             ins.save()
             print(ins.id)
+        elif ins == "User":
+            ins = User()
+            ins.save()
+            print(ins.id)
         else:
             print("** class doesn't exist **")
     
@@ -59,15 +64,15 @@ class HBNBCommand(cmd.Cmd):
         arg = list(args.split())
         if arg[0] is None or len(arg[0]) == 0:
             print("** class name missing **")
-        elif arg[0] != "BaseModel":
+        elif arg[0] != "BaseModel" and arg[0] != "User":
             print("** class doesn't exist **")
         elif len(arg) < 2:
             print("** instance id missing **")
         else:
-            id = arg[1]
+            cls_input, id = arg[0], arg[1]
             for key, value in storage.all().items():
                 cls, ins_id = key.split(".")
-                if (id == ins_id):
+                if cls == cls_input and id == ins_id:
                     print(str(value))
                     return
             print("** no instance found **")
@@ -79,18 +84,19 @@ class HBNBCommand(cmd.Cmd):
         arg = list(args.split())
         if arg[0] is None or len(arg[0]) == 0:
             print("** class name missing **")
-        elif arg[0] != "BaseModel":
+        elif arg[0] != "BaseModel" and arg[0] != "User":
             print("** class doesn't exist **")
         elif len(arg) < 2:
             print("** instance id missing **")
         else:
-            id = arg[1]
-            for key in storage.all().keys():
+            cls_input, id = arg[0], arg[1]
+            for key in list(storage.all().keys()):
                 cls, ins_id = key.split(".")
-                if (id == ins_id):
-                    del storage.all()[key]
-                    storage.save()
-                    return
+                if cls == cls_input and id == ins_id:
+                    if (id == ins_id):
+                        del storage.all()[key]
+                        storage.save()
+                        return
             print("** no instance found **")
 
     def do_all(self, args):
@@ -98,12 +104,18 @@ class HBNBCommand(cmd.Cmd):
         Prints all string representation of all instances
         '''
         arg = list(args.split())
-        if len(arg) > 1 and arg[0] != "BaseModel":
+        if len(arg) > 1 and (arg[0] != "BaseModel" or arg[0] != "User"):
             print("** class doesn't exist **")
         else:
             list_all = []
-            for value in storage.all().values():
-                list_all.append(str(value))
+            if (len(arg) < 1):
+                for key, value in storage.all().items():
+                    list_all.append(str(value))
+            else:
+                for key, value in storage.all().items():
+                    cls, ins_id = key.split(".")
+                    if cls == arg[0]:
+                        list_all.append(str(value))
             print(list_all)
     
     def do_update(self, args):
@@ -111,9 +123,9 @@ class HBNBCommand(cmd.Cmd):
          Updates an instance based on the class name and id
         '''
         arg = shlex.split(args)
-        if arg[0] is None or len(arg[0]) == 0:
+        if len(arg) == 0:
             print("** class name missing **")
-        elif arg[0] != "BaseModel":
+        elif arg[0] != "BaseModel" and arg[0] != "User":
             print("** class doesn't exist **")
         elif len(arg) < 2:
             print("** instance id missing **")
@@ -122,7 +134,7 @@ class HBNBCommand(cmd.Cmd):
         elif len(arg) < 4:
             print("** value missing **")
         else:
-            id, new_attr, new_attr_val = arg[1], arg[2], arg[3]
+            cls_input, id, new_attr, new_attr_val = arg[0], arg[1], arg[2], arg[3]
             new_attr_val = str(new_attr_val)
             new_attr_val = str(new_attr_val.strip('"'))
             try:
@@ -137,7 +149,7 @@ class HBNBCommand(cmd.Cmd):
                     pass
             for key, value in storage.all().items():
                 cls, ins_id = key.split(".")
-                if (id == ins_id):
+                if cls == cls_input and ins_id == id:
                     setattr(value, new_attr, new_attr_val)
                     storage.save()
                     return

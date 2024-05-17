@@ -181,10 +181,25 @@ class HBNBCommand(cmd.Cmd):
 
     def default(self, line):
         args, action = line.split('.')
+        correct_action = action.split('(')[0]
         if action == "all()":
             self.do_all(args)
         elif action == "count()":
             self.do_count(args)
+        elif correct_action == "show":
+            id = ''.join(action.split('(')[1:])
+            id = id.replace(')', '')
+            id = id.replace('"', '')
+            final = args + " " + id
+            self.do_show(final)
+        elif correct_action == "destroy":
+            id = ''.join(action.split('(')[1:])
+            id = id.replace(')', '')
+            id = id.replace('"', '')
+            final = args + " " + id
+            self.do_destroy(final)
+
+
     
     def do_count(self, args):
         arg = list(args.split())
@@ -193,33 +208,13 @@ class HBNBCommand(cmd.Cmd):
         elif arg[0] not in classes:
             print("** class doesn't exist **")
         else:
-            command = args[1]
-            correct_command = command.split('(')[0]
-            if(correct_command == "all"):
-                cls_input = arg[0]
+            cls_input = arg[0]
             num = 0
             for key in storage.all().keys():
                 cls, ins_id = key.split(".")
                 if cls == cls_input:
                     num += 1
             print(num)
-
-
-            elif(correct_command == "show"):
-                id = ''.join(command.split('(')[1:])
-                id = id.replace(')', '')
-                id = id.replace('"', '')
-                final = args[0] + " " + id
-                self.do_show(final)
-            elif correct_command == "destroy":
-                id = ''.join(command.split('(')[1:])
-                id = id.replace(')', '')
-                id = id.replace('"', '')
-                final = args[0] + " " + id
-                self.do_destroy(final)
-
-
-
 
 if __name__ == '__main__':
     HBNBCommand().cmdloop()

@@ -166,12 +166,30 @@ class HBNBCommand(cmd.Cmd):
                     storage.save()
                     return
             print("** no instance found **")
+
     def default(self, line):
-        args = line.split('.')
-        if len(args) == 1:
-            return super().default(line)
+        args, action = line.split('.')
+        if action == "all()":
+            self.do_all(args)
+        elif action == "count()":
+            self.do_count(args)
+    
+    def do_count(self, args):
+        arg = list(args.split())
+        if arg[0] is None or len(arg[0]) == 0:
+            print("** class name missing **")
+        elif arg[0] not in classes:
+            print("** class doesn't exist **")
         else:
-            self.do_all(args[0])
+            cls_input = arg[0]
+            num = 0
+            for key in storage.all().keys():
+                cls, ins_id = key.split(".")
+                if cls == cls_input:
+                    num += 1
+            print(num)
+
+
 
 
 

@@ -24,6 +24,7 @@ classes = {
             "Review": Review,
             "State": State
         }
+
 class HBNBCommand(cmd.Cmd):
     '''
     class
@@ -31,11 +32,13 @@ class HBNBCommand(cmd.Cmd):
 
     prompt="(hbnb) "
 
+
     def do_help(self, arg):
         '''
         here's ur help for this interpreter
         '''
         return super().do_help(arg)
+
 
     def do_quit(self, arg):
         '''
@@ -43,17 +46,20 @@ class HBNBCommand(cmd.Cmd):
         '''
         return True
 
+
     def do_EOF(self, line):
         '''
         EOF to exit the program
         '''
         return True
 
+
     def emptyline(self):
         '''
         emptyline - Do NOTHING
         '''
         pass
+
 
     def do_create(self, cls=None):
         '''
@@ -68,7 +74,9 @@ class HBNBCommand(cmd.Cmd):
             print(ins.id)
         else:
             print("** class doesn't exist **")
-    
+
+
+
     def do_show(self, args):
         '''
         Prints the string representation of an instance based on the class name and id
@@ -88,6 +96,7 @@ class HBNBCommand(cmd.Cmd):
                     print(str(value))
                     return
             print("** no instance found **")
+
 
     def do_destroy(self, args):
         '''
@@ -111,6 +120,7 @@ class HBNBCommand(cmd.Cmd):
                         return
             print("** no instance found **")
 
+
     def do_all(self, args):
         '''
         Prints all string representation of all instances
@@ -129,7 +139,9 @@ class HBNBCommand(cmd.Cmd):
                     if cls == arg[0]:
                         list_all.append(str(value))
             print(list_all)
-    
+
+
+
     def do_update(self, args):
         '''
          Updates an instance based on the class name and id
@@ -181,7 +193,10 @@ class HBNBCommand(cmd.Cmd):
         elif arg[0] not in classes:
             print("** class doesn't exist **")
         else:
-            cls_input = arg[0]
+            command = args[1]
+            correct_command = command.split('(')[0]
+            if(correct_command == "all"):
+                cls_input = arg[0]
             num = 0
             for key in storage.all().keys():
                 cls, ins_id = key.split(".")
@@ -189,6 +204,19 @@ class HBNBCommand(cmd.Cmd):
                     num += 1
             print(num)
 
+
+            elif(correct_command == "show"):
+                id = ''.join(command.split('(')[1:])
+                id = id.replace(')', '')
+                id = id.replace('"', '')
+                final = args[0] + " " + id
+                self.do_show(final)
+            elif correct_command == "destroy":
+                id = ''.join(command.split('(')[1:])
+                id = id.replace(')', '')
+                id = id.replace('"', '')
+                final = args[0] + " " + id
+                self.do_destroy(final)
 
 
 

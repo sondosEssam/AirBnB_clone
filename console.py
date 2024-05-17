@@ -141,7 +141,6 @@ class HBNBCommand(cmd.Cmd):
             print(list_all)
 
 
-
     def do_update(self, args):
         '''
          Updates an instance based on the class name and id
@@ -179,29 +178,41 @@ class HBNBCommand(cmd.Cmd):
                     return
             print("** no instance found **")
 
+
     def default(self, line):
-        args, action = line.split('.')
+        '''
+        defualt
+        '''
+        args = line.split('.')
+        if len(args) == 1:
+            return super().default(line)
+        action = args[1]
         correct_action = action.split('(')[0]
         if action == "all()":
-            self.do_all(args)
+            self.do_all(args[0])
         elif action == "count()":
-            self.do_count(args)
+            self.do_count(args[0])
         elif correct_action == "show":
             id = ''.join(action.split('(')[1:])
             id = id.replace(')', '')
             id = id.replace('"', '')
-            final = args + " " + id
+            final = args[0] + " " + id
             self.do_show(final)
         elif correct_action == "destroy":
             id = ''.join(action.split('(')[1:])
             id = id.replace(')', '')
             id = id.replace('"', '')
-            final = args + " " + id
+            final = args[0] + " " + id
             self.do_destroy(final)
+        else:
+            return super().default(line)
 
 
-    
+
     def do_count(self, args):
+        '''
+        count no o finstances
+        '''
         arg = list(args.split())
         if arg[0] is None or len(arg[0]) == 0:
             print("** class name missing **")

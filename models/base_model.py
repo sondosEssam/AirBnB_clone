@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 """
-base_class module 
+base_class module
 contains base class for all other class
 """
 
@@ -8,14 +8,16 @@ contains base class for all other class
 import uuid
 import datetime
 from models import storage
+
+
 class BaseModel:
     '''
-    BaseModel class - parent class for all other classses 
+    BaseModel class - parent class for all other classses
     '''
 
     def __init__(self, *args, **kwargs):
         '''
-        intiating basemodel instance 
+        intiating basemodel instance
         '''
         if(len(kwargs) == 0):
             self.id = str(uuid.uuid4())
@@ -31,9 +33,6 @@ class BaseModel:
                     else:
                         setattr(self, key, value)
 
-                
-
-
     def __str__(self):
         '''
         representation of basemodel
@@ -46,6 +45,7 @@ class BaseModel:
         '''
         self.updated_at = datetime.datetime.now()
         storage.save()
+
     def to_dict(self):
         '''
         returns dictionary representation of the class
@@ -55,7 +55,7 @@ class BaseModel:
             if key == "created_at":
                 iso_dt = self.created_at.isoformat()
                 my_dict[key] = iso_dt
-            elif  key == "updated_at":
+            elif key == "updated_at":
                 iso_dt = self.updated_at.isoformat()
                 my_dict[key] = iso_dt
             else:

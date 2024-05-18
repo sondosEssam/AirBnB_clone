@@ -25,13 +25,13 @@ classes = {
             "State": State
         }
 
+
 class HBNBCommand(cmd.Cmd):
     '''
     class
     '''
 
-    prompt="(hbnb) "
-
+    prompt = "(hbnb) "
 
     def do_help(self, arg):
         '''
@@ -39,13 +39,11 @@ class HBNBCommand(cmd.Cmd):
         '''
         return super().do_help(arg)
 
-
     def do_quit(self, arg):
         '''
         Quit command to exit the program
         '''
         return True
-
 
     def do_EOF(self, line):
         '''
@@ -53,17 +51,15 @@ class HBNBCommand(cmd.Cmd):
         '''
         return True
 
-
     def emptyline(self):
         '''
         emptyline - Do NOTHING
         '''
         pass
 
-
     def do_create(self, cls=None):
         '''
-        Creates a new instance of BaseModel, saves it (to the JSON file) and prints the id
+        Creates a new instance of BaseModel, saves it, prints the id
         '''
         if cls is None or len(cls) == 0:
             print("** class name missing **")
@@ -75,11 +71,9 @@ class HBNBCommand(cmd.Cmd):
         else:
             print("** class doesn't exist **")
 
-
-
     def do_show(self, args):
         '''
-        Prints the string representation of an instance based on the class name and id
+        Prints the string representation of an instance
         '''
         arg = list(args.split())
         if arg[0] is None or len(arg[0]) == 0:
@@ -96,7 +90,6 @@ class HBNBCommand(cmd.Cmd):
                     print(str(value))
                     return
             print("** no instance found **")
-
 
     def do_destroy(self, args):
         '''
@@ -120,7 +113,6 @@ class HBNBCommand(cmd.Cmd):
                         return
             print("** no instance found **")
 
-
     def do_all(self, args):
         '''
         Prints all string representation of all instances
@@ -140,7 +132,6 @@ class HBNBCommand(cmd.Cmd):
                         list_all.append(str(value))
             print(list_all)
 
-
     def do_update(self, args):
         '''
          Updates an instance based on the class name and id
@@ -157,7 +148,8 @@ class HBNBCommand(cmd.Cmd):
         elif len(arg) < 4:
             print("** value missing **")
         else:
-            cls_input, id, new_attr, new_attr_val = arg[0], arg[1], arg[2], arg[3]
+            cls_input, id = arg[0], arg[1]
+            new_attr, new_attr_val = arg[2], arg[3]
             new_attr_val = str(new_attr_val)
             new_attr_val = str(new_attr_val.strip('"'))
             try:
@@ -177,7 +169,6 @@ class HBNBCommand(cmd.Cmd):
                     storage.save()
                     return
             print("** no instance found **")
-
 
     def default(self, line):
         '''
@@ -207,8 +198,6 @@ class HBNBCommand(cmd.Cmd):
         else:
             return super().default(line)
 
-
-
     def do_count(self, args):
         '''
         count no o finstances
@@ -226,6 +215,7 @@ class HBNBCommand(cmd.Cmd):
                 if cls == cls_input:
                     num += 1
             print(num)
+
 
 if __name__ == '__main__':
     HBNBCommand().cmdloop()

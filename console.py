@@ -148,7 +148,7 @@ class HBNBCommand(cmd.Cmd):
         elif len(arg) < 4:
             print("** value missing **")
         else:
-            cls_input, id = arg[0], arg[1]
+            cls_input, id = arg[0], arg[1].replace('"', '')
             new_attr, new_attr_val = arg[2], arg[3]
             new_attr_val = str(new_attr_val)
             new_attr_val = str(new_attr_val.strip('"'))

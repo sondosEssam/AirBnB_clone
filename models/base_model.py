@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 """
 base_class module
-contains base class for all other class
+contains base class for all other class - parent class
 """
 
 

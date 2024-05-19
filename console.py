@@ -195,6 +195,10 @@ class HBNBCommand(cmd.Cmd):
             id = id.replace('"', '')
             final = args[0] + " " + id
             self.do_destroy(final)
+        elif correct_action == "update":
+            values = action.split('"')[1::2]
+            final = args[0] + " " + ' '.join(values)
+            self.do_update(final)
         else:
             return super().default(line)
 

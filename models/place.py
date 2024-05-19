@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 '''
-Place class that inherits from BaseModel
+Place class that inherits from BaseModel - not used yet
 '''
 
 

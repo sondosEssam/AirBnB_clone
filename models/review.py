@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 '''
-review class that inherits from BaseModel
+review class that inherits from BaseModel - not used yet
 '''
 
 

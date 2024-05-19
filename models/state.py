@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 '''
-state class that inherits from BaseModel
+state class that inherits from BaseModel - not used yet
 '''
 
 

@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 '''
-city class that inherits from BaseModel
+city class that inherits from BaseModel , usage still known
 '''
 
 

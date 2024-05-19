@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 '''
-file module
+filestorage  module , used to serilize/desirlize objects
 '''
 import json
 

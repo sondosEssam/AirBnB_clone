@@ -103,7 +103,7 @@ class HBNBCommand(cmd.Cmd):
         elif len(arg) < 2:
             print("** instance id missing **")
         else:
-            cls_input, id = arg[0], arg[1]
+            cls_input, id = arg[0], arg[1].replace('"', '')
             for key in list(storage.all().keys()):
                 cls, ins_id = key.split(".")
                 if cls == cls_input and id == ins_id:

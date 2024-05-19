@@ -39,8 +39,10 @@ class TestBaseModel(unittest.TestCase):
         }
         obj = BaseModel(**kwargs)
         self.assertEqual(obj.id, kwargs["id"])
-        self.assertEqual(obj.created_at, datetime.fromisoformat(kwargs["created_at"]))
-        self.assertEqual(obj.updated_at, datetime.fromisoformat(kwargs["updated_at"]))
+        self.assertEqual(obj.created_at,
+                         datetime.fromisoformat(kwargs["created_at"]))
+        self.assertEqual(obj.updated_at,
+                         datetime.fromisoformat(kwargs["updated_at"]))
         self.assertEqual(obj.name, kwargs["name"])
 
     def test_str(self):

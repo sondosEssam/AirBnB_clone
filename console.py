@@ -76,14 +76,14 @@ class HBNBCommand(cmd.Cmd):
         Prints the string representation of an instance
         '''
         arg = list(args.split())
-        if arg[0] is None or len(arg[0]) == 0:
+        if args is None or len(arg) == 0:
             print("** class name missing **")
         elif arg[0] not in classes:
             print("** class doesn't exist **")
         elif len(arg) < 2:
             print("** instance id missing **")
         else:
-            cls_input, id = arg[0], arg[1]
+            cls_input, id = arg[0], arg[1].replace('"', '')
             for key, value in storage.all().items():
                 cls, ins_id = key.split(".")
                 if cls == cls_input and id == ins_id:

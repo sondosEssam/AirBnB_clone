@@ -8,6 +8,7 @@ from models.user import User
 from datetime import datetime
 import uuid
 
+
 class TestUser(unittest.TestCase):
     '''
     test cases for User methods and attributes
@@ -49,8 +50,10 @@ class TestUser(unittest.TestCase):
         }
         obj = User(**kwargs)
         self.assertEqual(obj.id, kwargs["id"])
-        self.assertEqual(obj.created_at, datetime.fromisoformat(kwargs["created_at"]))
-        self.assertEqual(obj.updated_at, datetime.fromisoformat(kwargs["updated_at"]))
+        self.assertEqual(obj.created_at,
+                         datetime.fromisoformat(kwargs["created_at"]))
+        self.assertEqual(obj.updated_at,
+                         datetime.fromisoformat(kwargs["updated_at"]))
         self.assertEqual(obj.email, kwargs["email"])
         self.assertEqual(obj.password, kwargs["password"])
         self.assertEqual(obj.first_name, kwargs["first_name"])
@@ -87,6 +90,7 @@ class TestUser(unittest.TestCase):
         self.assertEqual(obj_dict["created_at"], obj.created_at.isoformat())
         self.assertEqual(obj_dict["updated_at"], obj.updated_at.isoformat())
         self.assertNotIn("name", obj_dict)
+
 
 if __name__ == '__main__':
     unittest.main()

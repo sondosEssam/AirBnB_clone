@@ -3,6 +3,7 @@
 filestorage  module , used to serilize/desirlize objects
 '''
 import json
+import os
 
 
 class FileStorage:
@@ -38,6 +39,9 @@ class FileStorage:
         '''
         deserializes the JSON file to __objects
         '''
+        if (os.path.exists(FileStorage.__file_path) and
+                os.path.getsize(FileStorage.__file_path) == 0):
+            return
         try:
             with open(FileStorage.__file_path, "r") as f:
                 data = json.load(f)

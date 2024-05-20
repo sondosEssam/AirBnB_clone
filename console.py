@@ -118,7 +118,7 @@ class HBNBCommand(cmd.Cmd):
         Prints all string representation of all instances
         '''
         arg = list(args.split())
-        if len(arg) > 1 and (arg[0] not in classes):
+        if len(arg) >= 1 and (arg[0] not in classes):
             print("** class doesn't exist **")
         else:
             list_all = []

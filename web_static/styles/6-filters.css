@@ -8,6 +8,7 @@
   background-position-y: 50%;
   background-position-x: 20px;
   justify-content: space-between;
+
 }
 button{
   font-size: 18px;
@@ -31,12 +32,10 @@ button:hover{
   height: 100%;
   width: 25%;
   display: flex;
-  flex-direction: column;
-  padding-right:0px ;
-  padding-left:50px ;
+  flex-direction: column; 
+
   position: relative;
-
-
+  box-sizing: border-box;
 }
 .locations
 {
@@ -46,8 +45,37 @@ button:hover{
   font-weight: 400;
   font-size: 14px;
   margin-top: 0px;
+  padding-left:40px ;
 }
 .locations h3, .amenities h3{
   font-weight: 600;
   margin-bottom: 0px;
+  padding-left:40px ;
+}
+.popover{
+  background-color: #FAFAFA;
+  border: 1px solid #DDDDDD;
+  display: none;
+  width : 100%;
+  position: relative;
+  margin-top: 0px;
+  padding: 30px;
+  border-radius: 4px;
+  box-sizing: border-box;
+
+}
+div.popover
+{
+  padding: 10px;
+
+}
+.locations:hover{
+  .popover{
+    display: block;
+  }
+}
+.amenities:hover{
+  .popover{
+    display: block;
+  }
 }
